@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { WaxSeal } from '../decorations/WaxSeal';
 import { GoldCornerFiligree, MughalJaliPattern } from '../decorations/MughalPatterns';
 import { WEDDING_CONFIG } from '../../config/invite';
@@ -80,10 +79,10 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
           <div className="absolute inset-1.5 border border-[#D4AF37]/40 rounded pointer-events-none" />
 
           {/* Rising Card Preview Inside (reveals upon open) */}
-          <motion.div
-            className="absolute inset-x-3 bottom-3 h-[85%] rounded bg-[#FAF6ED] p-3 shadow-lg flex flex-col items-center justify-center text-center z-10 border border-[#D4AF37]"
-            animate={isOpened ? { y: -70 } : { y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+          <div
+            className={`absolute inset-x-3 bottom-3 h-[85%] rounded bg-[#FAF6ED] p-3 shadow-lg flex flex-col items-center justify-center text-center z-10 border border-[#D4AF37] transition-transform duration-700 ease-out ${
+              isOpened ? '-translate-y-16 sm:-translate-y-20' : 'translate-y-0'
+            }`}
           >
             <span className="text-[9px] tracking-widest text-[#8C6F1E] font-serif uppercase">
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -94,7 +93,7 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
             <p className="text-[9px] font-sans tracking-widest uppercase text-[#8C6F1E]">
               Cordially Invite You
             </p>
-          </motion.div>
+          </div>
 
           {/* Envelope Pocket Folds */}
           <div className="absolute inset-0 pointer-events-none z-20">
@@ -118,11 +117,11 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
           </div>
 
           {/* Top Flap with Simple 3D Unfold (0.6s) */}
-          <motion.div
-            className="absolute top-0 inset-x-0 h-1/2 z-30 origin-top"
+          <div
+            className={`absolute top-0 inset-x-0 h-1/2 origin-top transition-transform duration-600 ease-in-out ${
+              isOpened ? '[transform:rotateX(180deg)] z-10' : '[transform:rotateX(0deg)] z-30'
+            }`}
             style={{ transformStyle: 'preserve-3d' }}
-            animate={isOpened ? { rotateX: 180, zIndex: 5 } : { rotateX: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
           >
             <svg className="w-full h-full" viewBox="0 0 320 120" preserveAspectRatio="none">
               <polygon points="0,0 320,0 160,120" fill="#5F1020" />
@@ -138,7 +137,7 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
                 onClick={handleOpenEnvelope}
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
 

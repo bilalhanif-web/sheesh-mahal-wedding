@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { RoyalAudioPlayer } from './components/audio/RoyalAudioPlayer';
 import { Scene1Envelope } from './components/scenes/Scene1Envelope';
-import { AnimatePresence, motion } from 'framer-motion';
 
 // Code-split below-the-fold scenes to drastically reduce initial JS payload and main-thread work
 const Scene2Doors = lazy(() => import('./components/scenes/Scene2Doors').then(m => ({ default: m.Scene2Doors })));
@@ -69,70 +68,58 @@ export function App() {
         {/* Main Phone-Width Stage */}
         <main className="relative w-full max-w-xl bg-gradient-to-b from-[#1C040A] via-[#2A0710] to-[#120206] shadow-[0_0_80px_rgba(0,0,0,0.95)] z-10 overflow-hidden">
           {/* SCENE 1: THE ROYAL ENVELOPE (Full-Screen Opening) */}
-          <AnimatePresence mode="wait">
-            {!hasOpenedEnvelope ? (
-              <motion.div
-                key="scene-envelope"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="w-full"
-              >
-                <Scene1Envelope onOpen={handleEnvelopeOpen} onSkip={handleSkipIntro} />
-              </motion.div>
-            ) : (
-              /* SCENES 2 THROUGH 8: THE SHEESH MAHAL PALACE EXPERIENCE */
-              <motion.div
-                key="scene-palace"
-                ref={palaceRef}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                className="w-full flex flex-col"
-              >
-                <Suspense fallback={null}>
-                  {/* SCENE 2: The Sheesh Mahal Doors & Sacred Announcement */}
-                  <Scene2Doors
-                    autoOpen={true}
-                    onContinue={() => {
-                      const el = document.getElementById('save-the-date');
-                      el?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  />
+          {!hasOpenedEnvelope ? (
+            <div className="w-full transition-opacity duration-500">
+              <Scene1Envelope onOpen={handleEnvelopeOpen} onSkip={handleSkipIntro} />
+            </div>
+          ) : (
+            /* SCENES 2 THROUGH 8: THE SHEESH MAHAL PALACE EXPERIENCE */
+            <div
+              ref={palaceRef}
+              className="w-full flex flex-col transition-opacity duration-700 ease-in opacity-100"
+            >
+              <Suspense fallback={null}>
+                {/* SCENE 2: The Sheesh Mahal Doors & Sacred Announcement */}
+                <Scene2Doors
+                  autoOpen={true}
+                  onContinue={() => {
+                    const el = document.getElementById('save-the-date');
+                    el?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                />
 
-                  {/* SCENE 3: Scratch to Reveal Special Day */}
-                  <div id="save-the-date">
-                    <Scene3ScratchCard />
-                  </div>
+                {/* SCENE 3: Scratch to Reveal Special Day */}
+                <div id="save-the-date">
+                  <Scene3ScratchCard />
+                </div>
 
-                  {/* SCENE 4: Wedding Flip-Clock Countdown */}
-                  <div id="countdown">
-                    <Scene4Countdown />
-                  </div>
+                {/* SCENE 4: Wedding Flip-Clock Countdown */}
+                <div id="countdown">
+                  <Scene4Countdown />
+                </div>
 
-                  {/* SCENE 5: The Wedding Journey (Mehndi, Barat, Walima) */}
-                  <div id="ceremonies">
-                    <Scene5Journey />
-                  </div>
+                {/* SCENE 5: The Wedding Journey (Mehndi, Barat, Walima) */}
+                <div id="ceremonies">
+                  <Scene5Journey />
+                </div>
 
-                  {/* SCENE 6: Interactive Wedding Venues & Google Maps */}
-                  <div id="venues">
-                    <Scene6Venues />
-                  </div>
+                {/* SCENE 6: Interactive Wedding Venues & Google Maps */}
+                <div id="venues">
+                  <Scene6Venues />
+                </div>
 
-                  {/* SCENE 7: Royal RSVP Contact Card */}
-                  <div id="rsvp">
-                    <Scene7Rsvp />
-                  </div>
+                {/* SCENE 7: Royal RSVP Contact Card */}
+                <div id="rsvp">
+                  <Scene7Rsvp />
+                </div>
 
-                  {/* SCENE 8: The Royal Finale & Closing Dua */}
-                  <div id="finale">
-                    <Scene8Finale onReplay={handleReplay} />
-                  </div>
-                </Suspense>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {/* SCENE 8: The Royal Finale & Closing Dua */}
+                <div id="finale">
+                  <Scene8Finale onReplay={handleReplay} />
+                </div>
+              </Suspense>
+            </div>
+          )}
         </main>
       </div>
     </div>
