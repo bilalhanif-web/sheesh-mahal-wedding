@@ -27,12 +27,24 @@ export function App() {
     }
   }, []);
 
+  const loadUrduFont = () => {
+    if (typeof document === 'undefined') return;
+    if (document.getElementById('urdu-font-stylesheet')) return;
+    const link = document.createElement('link');
+    link.id = 'urdu-font-stylesheet';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap';
+    document.head.appendChild(link);
+  };
+
   const handleEnvelopeOpen = () => {
+    loadUrduFont();
     setAudioTriggered(true);
     setHasOpenedEnvelope(true);
   };
 
   const handleSkipIntro = () => {
+    loadUrduFont();
     setAudioTriggered(true);
     setHasOpenedEnvelope(true);
   };
