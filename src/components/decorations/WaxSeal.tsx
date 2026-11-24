@@ -32,7 +32,7 @@ const WaxSealSvg: React.FC<{ initials: string }> = ({ initials }) => {
   return (
     <svg
       viewBox="0 0 120 120"
-      className="w-full h-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] filter"
+      className="w-full h-full"
     >
       <defs>
         <radialGradient id="waxGoldBody" cx="38%" cy="32%" r="65%">

@@ -64,8 +64,8 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
 
       {/* Main Centered Compact Envelope Container (Reduced ~25% to fit all phone viewports) */}
       <main className="relative w-[280px] sm:w-[320px] aspect-[4/3] my-auto z-20 shrink-0">
-        {/* Soft shadow */}
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-4 bg-black/50 rounded-full blur-md pointer-events-none" />
+        {/* Soft shadow using clean radial gradient without CPU blur filter */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-4/5 h-4 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,transparent_70%)] pointer-events-none" />
 
         {/* Envelope Body */}
         <div className="relative w-full h-full rounded-lg bg-[#5A0F1E] border border-[#D4AF37]/80 shadow-[0_15px_35px_rgba(0,0,0,0.85)] overflow-hidden">
@@ -111,7 +111,7 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
             <span className="text-[10px] tracking-widest uppercase text-[#FBE285] font-serif opacity-90">
               Honoured Guest
             </span>
-            <p className="font-serif italic text-base sm:text-lg text-[#FAF6ED] font-medium tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] truncate max-w-[240px]">
+            <p className="font-serif italic text-base sm:text-lg text-[#FAF6ED] font-medium tracking-wide [text-shadow:0_1px_3px_rgba(0,0,0,0.8)] truncate max-w-[240px]">
               {guest.salutation}
             </p>
           </div>
