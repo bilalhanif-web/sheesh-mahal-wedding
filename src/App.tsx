@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { AmbientCanvas } from './components/ambient/AmbientCanvas';
 import { RoyalAudioPlayer } from './components/audio/RoyalAudioPlayer';
-import { ScrollProgressThread } from './components/ui/ScrollProgressThread';
 import { Scene1Envelope } from './components/scenes/Scene1Envelope';
 import { Scene2Doors } from './components/scenes/Scene2Doors';
 import { Scene3ScratchCard } from './components/scenes/Scene3ScratchCard';
@@ -47,7 +45,6 @@ export function App() {
   if (isPreview) {
     return (
       <div className="relative min-h-[100dvh] bg-[#120206] text-[#FAF6ED]">
-        <AmbientCanvas active={true} />
         <RoyalAudioPlayer autoPlayTriggered={true} />
         <PreviewManager />
       </div>
@@ -56,17 +53,11 @@ export function App() {
 
   return (
     <div className="relative min-h-[100dvh] w-full bg-[#0D0104] text-[#FAF6ED] overflow-x-hidden">
-      {/* PERSISTENT GLOBAL AMBIENT CANVAS (Rose petals, gold dust, mirror glints) */}
-      <AmbientCanvas active={true} />
-
       {/* PERSISTENT FLOATING AUDIO PLAYER & EQUALIZER */}
       <RoyalAudioPlayer autoPlayTriggered={audioTriggered} />
 
-      {/* PERSISTENT GOLDEN SCROLL PROGRESS THREAD */}
-      <ScrollProgressThread />
-
       {/* DESKTOP RESPONSIVE CONTAINER:
-          Centred phone/tablet stage with subtle blurred royal velvet ambient backdrop on wide screens */}
+          Centred phone/tablet stage with subtle royal velvet backdrop on wide screens */}
       <div className="relative w-full min-h-[100dvh] flex justify-center">
         {/* Background ambient lighting on desktop margins */}
         <div className="fixed inset-0 pointer-events-none hidden lg:block bg-[radial-gradient(circle_at_center,#3D0A14_0%,#140206_70%,#080002_100%)] opacity-80" />
@@ -80,7 +71,7 @@ export function App() {
                 key="scene-envelope"
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.6 }}
                 className="w-full"
               >
                 <Scene1Envelope onOpen={handleEnvelopeOpen} onSkip={handleSkipIntro} />
@@ -92,7 +83,7 @@ export function App() {
                 ref={palaceRef}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1.2 }}
+                transition={{ duration: 0.8 }}
                 className="w-full flex flex-col"
               >
                 {/* SCENE 2: The Sheesh Mahal Doors & Sacred Announcement */}

@@ -1,6 +1,4 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
 import { MughalArchFrame, MughalJaliPattern, GoldCornerFiligree } from '../decorations/MughalPatterns';
 import { Sparkles, Touchpad } from 'lucide-react';
 import { WEDDING_CONFIG } from '../../config/invite';
@@ -26,7 +24,7 @@ export const Scene3ScratchCard: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Rich antique gold foil gradient
+    // Antique gold foil gradient
     const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     grad.addColorStop(0, '#FFE898');
     grad.addColorStop(0.25, '#D4AF37');
@@ -37,31 +35,21 @@ export const Scene3ScratchCard: React.FC = () => {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Add subtle jali texture dots
-    ctx.fillStyle = 'rgba(74, 47, 4, 0.12)';
-    for (let x = 15; x < canvas.width; x += 30) {
-      for (let y = 15; y < canvas.height; y += 30) {
-        ctx.beginPath();
-        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // Add Gold Foil Border
+    // Subtle gold border
     ctx.strokeStyle = 'rgba(74, 47, 4, 0.4)';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
+    ctx.lineWidth = 3;
+    ctx.strokeRect(6, 6, canvas.width - 12, canvas.height - 12);
 
-    // Center instruction on foil
+    // Center instruction text
     ctx.fillStyle = '#2A0710';
-    ctx.font = 'bold 15px "Cormorant Garamond", serif';
+    ctx.font = 'bold 14px "Cormorant Garamond", serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('✧ SCRATCH TO REVEAL ✧', canvas.width / 2, canvas.height / 2 - 12);
+    ctx.fillText('✧ SCRATCH TO REVEAL ✧', canvas.width / 2, canvas.height / 2 - 10);
 
-    ctx.font = '13px "Jost", sans-serif';
+    ctx.font = '12px "Jost", sans-serif';
     ctx.fillStyle = '#4A2F04';
-    ctx.fillText('Our Special Day', canvas.width / 2, canvas.height / 2 + 14);
+    ctx.fillText('Our Special Day', canvas.width / 2, canvas.height / 2 + 12);
   }, []);
 
   useEffect(() => {
@@ -110,18 +98,6 @@ export const Scene3ScratchCard: React.FC = () => {
       if (ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-    }
-
-    try {
-      confetti({
-        particleCount: 70,
-        spread: 80,
-        origin: { y: 0.65 },
-        colors: ['#D4AF37', '#FBE285', '#5A0F1E', '#FAF6ED'],
-        ticks: 250,
-      });
-    } catch {
-      // Ignore
     }
   };
 
@@ -179,59 +155,59 @@ export const Scene3ScratchCard: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full py-20 px-4 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120206] via-[#2A0710] to-[#160308] select-none">
-      <MughalJaliPattern opacity={0.06} color="#D4AF37" />
+    <section className="relative w-full py-14 px-4 flex flex-col items-center justify-center bg-gradient-to-b from-[#120206] via-[#2A0710] to-[#160308] select-none">
+      <MughalJaliPattern opacity={0.05} color="#D4AF37" />
 
       {/* Header */}
-      <div className="text-center mb-8 z-10">
-        <span className="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-serif block mb-1">
+      <div className="text-center mb-6 z-10">
+        <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-serif block mb-0.5">
           Mark The Auspicious Date
         </span>
-        <h2 className="text-2xl sm:text-3xl font-serif text-[#FAF6ED] font-light">
+        <h2 className="text-xl sm:text-2xl font-serif text-[#FAF6ED] font-light">
           Scratch to Reveal Our Special Day
         </h2>
       </div>
 
       {/* Scratch Card in Mughal Arch Frame */}
-      <div className="relative w-full max-w-[340px] sm:max-w-[380px] z-10">
+      <div className="relative w-full max-w-[300px] sm:max-w-[340px] z-10">
         <MughalArchFrame className="w-full">
           <div
             ref={containerRef}
-            className="relative w-full aspect-[4/5] rounded-2xl bg-gradient-to-b from-[#5A0F1E] via-[#3B0713] to-[#20040A] border-2 border-[#D4AF37] shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(212,175,55,0.2)] overflow-hidden flex flex-col items-center justify-center p-6 text-center"
+            className="relative w-full aspect-[4/5] rounded-2xl bg-gradient-to-b from-[#5A0F1E] via-[#3B0713] to-[#20040A] border-2 border-[#D4AF37] shadow-[0_15px_35px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col items-center justify-center p-5 text-center"
           >
-            <GoldCornerFiligree position="top-left" size={38} />
-            <GoldCornerFiligree position="top-right" size={38} />
-            <GoldCornerFiligree position="bottom-left" size={38} />
-            <GoldCornerFiligree position="bottom-right" size={38} />
+            <GoldCornerFiligree position="top-left" size={32} />
+            <GoldCornerFiligree position="top-right" size={32} />
+            <GoldCornerFiligree position="bottom-left" size={32} />
+            <GoldCornerFiligree position="bottom-right" size={32} />
 
-            <div className="absolute inset-3 border border-[#D4AF37]/50 rounded-xl pointer-events-none" />
-            <div className="absolute inset-4 border border-dashed border-[#FBE285]/30 rounded-lg pointer-events-none" />
+            <div className="absolute inset-2.5 border border-[#D4AF37]/50 rounded-xl pointer-events-none" />
 
-            {/* REVEALED CONTENT */}
-            <div className="relative z-0 flex flex-col items-center justify-center w-full h-full py-4 space-y-2">
-              <span className="text-xs tracking-[0.35em] text-[#FBE285] font-serif uppercase font-semibold">
+            {/* Revealed Content Underneath */}
+            <div className="relative z-0 flex flex-col items-center justify-center w-full h-full py-3 space-y-1.5">
+              <span className="text-[11px] tracking-[0.3em] text-[#FBE285] font-serif uppercase font-semibold">
                 SAVE THE DATE
               </span>
 
-              <div className="h-[1px] w-16 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-1" />
+              <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-0.5" />
 
-              <span className="text-sm font-sans tracking-[0.25em] text-[#FAF6ED] uppercase font-light">
+              <span className="text-xs font-sans tracking-[0.25em] text-[#FAF6ED] uppercase font-light">
                 SUNDAY
               </span>
 
-              <div className="relative my-1">
-                <span className="text-7xl sm:text-8xl font-serif font-bold text-gold-bright drop-shadow-[0_4px_16px_rgba(212,175,55,0.5)] block">
+              {/* Golden 13 */}
+              <div className="my-0.5">
+                <span className="text-6xl sm:text-7xl font-serif font-bold text-gold-bright drop-shadow-[0_3px_12px_rgba(212,175,55,0.4)] block leading-none">
                   13
                 </span>
               </div>
 
-              <span className="text-base font-serif tracking-[0.3em] text-[#FBE285] uppercase font-medium">
+              <span className="text-sm font-serif tracking-[0.25em] text-[#FBE285] uppercase font-medium">
                 DECEMBER 2026
               </span>
 
-              <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-1" />
+              <div className="h-[1px] w-16 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-0.5" />
 
-              <h4 className="font-calligraphy text-2xl sm:text-3xl text-gold-bright pt-1">
+              <h4 className="font-calligraphy text-2xl text-gold-bright pt-0.5">
                 {WEDDING_CONFIG.couple.groom.shortName} &amp; {WEDDING_CONFIG.couple.bride.shortName}
               </h4>
             </div>
@@ -246,7 +222,7 @@ export const Scene3ScratchCard: React.FC = () => {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className={`absolute inset-0 z-20 w-full h-full cursor-pointer touch-none transition-opacity duration-700 ${
+              className={`absolute inset-0 z-20 w-full h-full cursor-pointer touch-none transition-opacity duration-500 ${
                 isRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'
               }`}
             />
@@ -255,29 +231,25 @@ export const Scene3ScratchCard: React.FC = () => {
       </div>
 
       {/* Accessible Tap to Reveal Alternative & Progress */}
-      <div className="mt-6 flex flex-col items-center space-y-3 z-10">
+      <div className="mt-5 flex flex-col items-center space-y-2 z-10">
         {!isRevealed ? (
           <>
             <button
               onClick={revealCard}
-              className="flex items-center space-x-2 text-xs font-serif tracking-widest text-[#FBE285] hover:text-white border border-[#D4AF37]/50 hover:border-[#FBE285] px-4 py-2 rounded-full bg-[#2A0710]/80 backdrop-blur-md transition-all shadow-md group"
+              className="flex items-center space-x-1.5 text-xs font-serif tracking-widest text-[#FBE285] hover:text-white border border-[#D4AF37]/50 hover:border-[#FBE285] px-4 py-2 rounded-full bg-[#2A0710]/90 transition-colors shadow-sm min-h-[44px]"
             >
-              <Touchpad className="w-3.5 h-3.5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+              <Touchpad className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>Tap Here to Reveal Date</span>
             </button>
-            <p className="text-[11px] font-sans text-[#FAF6ED]/60 tracking-wider">
-              {scratchProgress > 0 ? `Scratched ${scratchProgress}% (Reveals at 55%)` : 'Rub with finger or cursor'}
+            <p className="text-[10px] font-sans text-[#FAF6ED]/60 tracking-wider">
+              {scratchProgress > 0 ? `Scratched ${scratchProgress}% (Reveals at 55%)` : 'Rub with finger or tap button'}
             </p>
           </>
         ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center space-x-1.5 text-xs font-serif text-[#FBE285] tracking-widest uppercase bg-[#5A0F1E]/80 px-4 py-1.5 rounded-full border border-[#D4AF37]/40 shadow-lg"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[#FBE285] animate-spin" />
-            <span>Date Revealed — We Look Forward to Seeing You</span>
-          </motion.div>
+          <div className="flex items-center space-x-1.5 text-xs font-serif text-[#FBE285] tracking-widest uppercase bg-[#5A0F1E]/80 px-4 py-1.5 rounded-full border border-[#D4AF37]/40 shadow">
+            <Sparkles className="w-3.5 h-3.5 text-[#FBE285]" />
+            <span>Date Revealed &bull; Sunday, 13 Dec 2026</span>
+          </div>
         )}
       </div>
     </section>

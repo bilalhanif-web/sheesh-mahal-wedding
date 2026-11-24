@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 import { MughalArchFrame, MughalJaliPattern, GoldCornerFiligree } from '../decorations/MughalPatterns';
 import { WEDDING_CONFIG } from '../../config/invite';
@@ -7,41 +6,45 @@ import type { VenueLocation } from '../../config/invite';
 
 export const Scene6Venues: React.FC = () => {
   const [selectedVenue, setSelectedVenue] = useState<VenueLocation>(WEDDING_CONFIG.venues[0]);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   return (
-    <section className="relative w-full py-24 px-4 overflow-hidden bg-gradient-to-b from-[#120206] via-[#2A0710] to-[#160308] select-none">
-      <MughalJaliPattern opacity={0.06} color="#D4AF37" />
+    <section className="relative w-full py-16 px-4 bg-gradient-to-b from-[#120206] via-[#2A0710] to-[#160308] select-none">
+      <MughalJaliPattern opacity={0.05} color="#D4AF37" />
 
       {/* Heading */}
-      <div className="text-center max-w-lg mx-auto mb-10 z-10 relative">
-        <span className="text-xs uppercase tracking-[0.35em] text-[#D4AF37] font-serif block mb-1">
+      <div className="text-center max-w-md mx-auto mb-8 z-10 relative">
+        <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-serif block mb-0.5">
           Locations &amp; Map Guide
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF6ED] font-light">
+        <h2 className="text-2xl sm:text-3xl font-serif text-[#FAF6ED] font-light">
           Wedding Venues
         </h2>
-        <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-4" />
+        <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3" />
       </div>
 
-      <div className="max-w-xl mx-auto z-10 relative">
+      <div className="max-w-md mx-auto z-10 relative">
         {/* SELECTABLE VENUE TABS */}
-        <div className="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-[#1A0308]/90 border border-[#D4AF37]/40 backdrop-blur-md mb-8">
+        <div className="grid grid-cols-3 gap-1.5 p-1 rounded-2xl bg-[#1A0308]/90 border border-[#D4AF37]/40 mb-6">
           {WEDDING_CONFIG.venues.map((venue) => {
             const isSelected = selectedVenue.id === venue.id;
             return (
               <button
                 key={venue.id}
-                onClick={() => setSelectedVenue(venue)}
-                className={`relative py-3 px-2 rounded-xl text-center transition-all duration-300 flex flex-col items-center justify-center ${
+                onClick={() => {
+                  setSelectedVenue(venue);
+                  setMapLoaded(true);
+                }}
+                className={`py-2 px-1.5 rounded-xl text-center transition-colors flex flex-col items-center justify-center min-h-[44px] ${
                   isSelected
-                    ? 'bg-[#5A0F1E] text-[#FBE285] border border-[#D4AF37] shadow-[0_4px_15px_rgba(212,175,55,0.3)]'
-                    : 'text-[#FAF6ED]/70 hover:text-[#FAF6ED] hover:bg-[#2A0710]/60'
+                    ? 'bg-[#5A0F1E] text-[#FBE285] border border-[#D4AF37]'
+                    : 'text-[#FAF6ED]/70 hover:text-[#FAF6ED]'
                 }`}
               >
                 <span className="font-serif text-xs sm:text-sm font-medium leading-tight">
                   {venue.name}
                 </span>
-                <span className="text-[10px] font-sans text-[#FAF6ED]/60 mt-0.5 hidden sm:block">
+                <span className="text-[9px] font-sans text-[#FAF6ED]/50 mt-0.5 hidden sm:block">
                   {venue.id === 'tehzeeb-marquee' ? 'Toba Tek Singh' : 'Nawabpur'}
                 </span>
               </button>
@@ -51,64 +54,69 @@ export const Scene6Venues: React.FC = () => {
 
         {/* VENUE CARD IN MUGHAL ARCH FRAME */}
         <MughalArchFrame className="w-full">
-          <div className="rounded-2xl border-2 border-[#D4AF37] bg-gradient-to-b from-[#330813] to-[#150207] p-4 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden">
-            <GoldCornerFiligree position="top-left" size={36} />
-            <GoldCornerFiligree position="top-right" size={36} />
+          <div className="rounded-2xl border-2 border-[#D4AF37] bg-gradient-to-b from-[#330813] to-[#150207] p-4 sm:p-5 shadow-lg overflow-hidden">
+            <GoldCornerFiligree position="top-left" size={30} />
+            <GoldCornerFiligree position="top-right" size={30} />
 
             {/* Venue Info Banner */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedVenue.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35 }}
-                className="mb-4"
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="font-serif text-xl sm:text-2xl text-gold-bright font-medium">
-                    {selectedVenue.name}
-                  </h3>
-                  <span className="urdu-text text-lg text-[#FBE285]">
-                    {selectedVenue.urduName}
-                  </span>
-                </div>
-                <p className="text-xs font-sans tracking-wider uppercase text-[#D4AF37] mt-0.5">
-                  {selectedVenue.role}
-                </p>
-                <div className="flex items-center space-x-1.5 text-xs text-[#FAF6ED]/80 mt-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#FBE285] shrink-0" />
-                  <span>{selectedVenue.address}</span>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+            <div className="mb-3">
+              <div className="flex items-center justify-between">
+                <h3 className="font-serif text-lg sm:text-xl text-gold-bright font-medium">
+                  {selectedVenue.name}
+                </h3>
+                <span className="urdu-text text-base text-[#FBE285]">
+                  {selectedVenue.urduName}
+                </span>
+              </div>
+              <p className="text-[10px] font-sans tracking-wider uppercase text-[#D4AF37] mt-0.5">
+                {selectedVenue.role}
+              </p>
+              <div className="flex items-center space-x-1.5 text-xs text-[#FAF6ED]/80 mt-1">
+                <MapPin className="w-3.5 h-3.5 text-[#FBE285] shrink-0" />
+                <span>{selectedVenue.address}</span>
+              </div>
+            </div>
 
-            {/* Google Maps View inside Arch */}
-            <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-[#D4AF37]/50 shadow-inner bg-[#1A0308]">
-              <iframe
-                title={`Google Map - ${selectedVenue.name}`}
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                  selectedVenue.address
-                )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'contrast(1.05) saturate(1.1)' }}
-                allowFullScreen={false}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-              <div className="absolute inset-0 pointer-events-none border border-[#D4AF37]/30 rounded-xl" />
+            {/* Google Maps View - Lazy Loaded */}
+            <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-[#D4AF37]/50 bg-[#1A0308] flex items-center justify-center">
+              {!mapLoaded ? (
+                <div className="text-center p-4">
+                  <MapPin className="w-8 h-8 text-[#D4AF37] mx-auto mb-2 opacity-80" />
+                  <p className="font-serif text-xs text-[#FAF6ED]/80 mb-3">
+                    {selectedVenue.address}
+                  </p>
+                  <button
+                    onClick={() => setMapLoaded(true)}
+                    className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full border border-[#D4AF37] bg-[#5A0F1E] text-xs font-serif text-[#FBE285] min-h-[44px]"
+                  >
+                    <span>Load Interactive Map</span>
+                  </button>
+                </div>
+              ) : (
+                <iframe
+                  title={`Google Map - ${selectedVenue.name}`}
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                    selectedVenue.address
+                  )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              )}
             </div>
 
             {/* Actions: Get Directions & Open Map */}
-            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <a
                 href={selectedVenue.directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#FBE285] to-[#D4AF37] text-[#2A0710] font-serif font-semibold text-sm tracking-wider uppercase shadow-[0_4px_15px_rgba(212,175,55,0.4)] hover:shadow-[0_6px_20px_rgba(251,226,133,0.5)] transition-all"
+                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#FBE285] to-[#D4AF37] text-[#2A0710] font-serif font-bold text-xs tracking-wider uppercase shadow transition-transform active:scale-98 min-h-[44px]"
               >
-                <Navigation className="w-4 h-4 text-[#2A0710]" />
+                <Navigation className="w-3.5 h-3.5 text-[#2A0710]" />
                 <span>Get Directions</span>
               </a>
 
@@ -118,7 +126,7 @@ export const Scene6Venues: React.FC = () => {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-[#2A0710]/80 hover:bg-[#5A0F1E] border border-[#D4AF37]/60 text-xs font-serif text-[#FAF6ED] hover:text-[#FBE285] tracking-widest uppercase transition-all"
+                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-[#2A0710]/90 border border-[#D4AF37]/60 text-xs font-serif text-[#FAF6ED] hover:text-[#FBE285] tracking-wider uppercase transition-colors min-h-[44px]"
               >
                 <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span>View Full Map</span>

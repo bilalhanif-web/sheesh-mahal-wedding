@@ -218,7 +218,7 @@ export const WEDDING_CONFIG = {
 
   music: {
     title: 'Faisal & Bint-e-Hanif Wedding Music',
-    src: '/music.mp3', // Verified soundtrack from https://faisal-wedding-invitation.netlify.app/music.mp3
+    src: 'https://faisal-wedding-invitation.netlify.app/music.mp3', // Verified soundtrack from https://faisal-wedding-invitation.netlify.app/music.mp3
     originalUrl: 'https://faisal-wedding-invitation.netlify.app/music.mp3',
     fadeInDurationSeconds: 2.0,
     defaultVolume: 0.7,
