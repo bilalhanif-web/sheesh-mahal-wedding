@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  --color-velvet-maroon: #5A0F1E;
+  --color-deep-wine: #2A0710;
+  --color-antique-gold: #D4AF37;
+  --color-champagne: #F3E3C3;
+  --color-ivory: #FAF6ED;
+  --color-emerald: #143828;
+  --color-gold-bright: #FBE285;
+  --color-gold-dark: #8C6F1E;
+  --color-mustard: #C88616;
+  --color-gold-leaf: #E6CA65;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-calligraphy: "Great Vibes", cursive;
+  --font-sans: "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-urdu: "Noto Nastaliq Urdu", serif;
+}
+
+/* Custom CSS properties & Utility animations */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Ensure smooth touch interactions on mobile */
+html, body {
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Gold Text & Shimmer */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FBE285 0%, #D4AF37 50%, #8C6F1E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-bright {
+  background: linear-gradient(135deg, #FFF3BF 0%, #F5D061 40%, #D4AF37 80%, #9A7B1C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-gradient {
+  border-image: linear-gradient(135deg, #FBE285, #D4AF37, #8C6F1E) 1;
+}
+
+/* Gold foil embossed effect */
+.gold-emboss {
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4), 0 -1px 1px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.gold-box-shadow {
+  box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.3), 0 0 20px 2px rgba(212, 175, 55, 0.15);
+}
+
+.velvet-shadow {
+  box-shadow: inset 0 0 80px rgba(10, 0, 5, 0.8), 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-foil {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.1) 0%,
+    rgba(251, 226, 133, 0.6) 50%,
+    rgba(212, 175, 55, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3.5s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #2A0710;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FBE285;
+}
+
+/* Mughal Arch Clip Paths */
+.clip-mughal-arch {
+  clip-path: polygon(
+    0% 15%,
+    10% 8%,
+    25% 3%,
+    40% 1%,
+    50% 0%,
+    60% 1%,
+    75% 3%,
+    90% 8%,
+    100% 15%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+/* Nastaliq Urdu styling helper */
+.urdu-text {
+  font-family: var(--font-urdu), "Noto Nastaliq Urdu", serif;
+  direction: rtl;
+  line-height: 2.2;
+}
