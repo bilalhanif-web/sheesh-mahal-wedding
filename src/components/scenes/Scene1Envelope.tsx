@@ -149,7 +149,7 @@ export const Scene1Envelope: React.FC<Scene1EnvelopeProps> = ({ onOpen, onSkip }
           disabled={isOpened}
           className="flex items-center space-x-2 px-5 py-2.5 rounded-full border border-[#D4AF37]/60 bg-[#2A0710]/90 text-xs font-serif tracking-widest text-[#FAF6ED] hover:text-[#FBE285] uppercase transition-all shadow-md min-h-[44px]"
         >
-          <span className="w-2 h-2 rounded-full bg-[#FBE285] animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-[#FBE285] opacity-90" />
           <span>Tap the Seal to Open</span>
         </button>
       </footer>

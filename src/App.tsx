@@ -1,15 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { RoyalAudioPlayer } from './components/audio/RoyalAudioPlayer';
 import { Scene1Envelope } from './components/scenes/Scene1Envelope';
-import { Scene2Doors } from './components/scenes/Scene2Doors';
-import { Scene3ScratchCard } from './components/scenes/Scene3ScratchCard';
-import { Scene4Countdown } from './components/scenes/Scene4Countdown';
-import { Scene5Journey } from './components/scenes/Scene5Journey';
-import { Scene6Venues } from './components/scenes/Scene6Venues';
-import { Scene7Rsvp } from './components/scenes/Scene7Rsvp';
-import { Scene8Finale } from './components/scenes/Scene8Finale';
-import { PreviewManager } from './components/preview/PreviewManager';
 import { AnimatePresence, motion } from 'framer-motion';
+
+// Code-split below-the-fold scenes to drastically reduce initial JS payload and main-thread work
+const Scene2Doors = lazy(() => import('./components/scenes/Scene2Doors').then(m => ({ default: m.Scene2Doors })));
+const Scene3ScratchCard = lazy(() => import('./components/scenes/Scene3ScratchCard').then(m => ({ default: m.Scene3ScratchCard })));
+const Scene4Countdown = lazy(() => import('./components/scenes/Scene4Countdown').then(m => ({ default: m.Scene4Countdown })));
+const Scene5Journey = lazy(() => import('./components/scenes/Scene5Journey').then(m => ({ default: m.Scene5Journey })));
+const Scene6Venues = lazy(() => import('./components/scenes/Scene6Venues').then(m => ({ default: m.Scene6Venues })));
+const Scene7Rsvp = lazy(() => import('./components/scenes/Scene7Rsvp').then(m => ({ default: m.Scene7Rsvp })));
+const Scene8Finale = lazy(() => import('./components/scenes/Scene8Finale').then(m => ({ default: m.Scene8Finale })));
+const PreviewManager = lazy(() => import('./components/preview/PreviewManager').then(m => ({ default: m.PreviewManager })));
 
 export function App() {
   const [isPreview, setIsPreview] = useState(false);
@@ -46,7 +48,9 @@ export function App() {
     return (
       <div className="relative min-h-[100dvh] bg-[#120206] text-[#FAF6ED]">
         <RoyalAudioPlayer autoPlayTriggered={true} />
-        <PreviewManager />
+        <Suspense fallback={null}>
+          <PreviewManager />
+        </Suspense>
       </div>
     );
   }
@@ -86,44 +90,46 @@ export function App() {
                 transition={{ duration: 0.8 }}
                 className="w-full flex flex-col"
               >
-                {/* SCENE 2: The Sheesh Mahal Doors & Sacred Announcement */}
-                <Scene2Doors
-                  autoOpen={true}
-                  onContinue={() => {
-                    const el = document.getElementById('save-the-date');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                />
+                <Suspense fallback={null}>
+                  {/* SCENE 2: The Sheesh Mahal Doors & Sacred Announcement */}
+                  <Scene2Doors
+                    autoOpen={true}
+                    onContinue={() => {
+                      const el = document.getElementById('save-the-date');
+                      el?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  />
 
-                {/* SCENE 3: Scratch to Reveal Special Day */}
-                <div id="save-the-date">
-                  <Scene3ScratchCard />
-                </div>
+                  {/* SCENE 3: Scratch to Reveal Special Day */}
+                  <div id="save-the-date">
+                    <Scene3ScratchCard />
+                  </div>
 
-                {/* SCENE 4: Wedding Flip-Clock Countdown */}
-                <div id="countdown">
-                  <Scene4Countdown />
-                </div>
+                  {/* SCENE 4: Wedding Flip-Clock Countdown */}
+                  <div id="countdown">
+                    <Scene4Countdown />
+                  </div>
 
-                {/* SCENE 5: The Wedding Journey (Mehndi, Barat, Walima) */}
-                <div id="ceremonies">
-                  <Scene5Journey />
-                </div>
+                  {/* SCENE 5: The Wedding Journey (Mehndi, Barat, Walima) */}
+                  <div id="ceremonies">
+                    <Scene5Journey />
+                  </div>
 
-                {/* SCENE 6: Interactive Wedding Venues & Google Maps */}
-                <div id="venues">
-                  <Scene6Venues />
-                </div>
+                  {/* SCENE 6: Interactive Wedding Venues & Google Maps */}
+                  <div id="venues">
+                    <Scene6Venues />
+                  </div>
 
-                {/* SCENE 7: Royal RSVP Contact Card */}
-                <div id="rsvp">
-                  <Scene7Rsvp />
-                </div>
+                  {/* SCENE 7: Royal RSVP Contact Card */}
+                  <div id="rsvp">
+                    <Scene7Rsvp />
+                  </div>
 
-                {/* SCENE 8: The Royal Finale & Closing Dua */}
-                <div id="finale">
-                  <Scene8Finale onReplay={handleReplay} />
-                </div>
+                  {/* SCENE 8: The Royal Finale & Closing Dua */}
+                  <div id="finale">
+                    <Scene8Finale onReplay={handleReplay} />
+                  </div>
+                </Suspense>
               </motion.div>
             )}
           </AnimatePresence>

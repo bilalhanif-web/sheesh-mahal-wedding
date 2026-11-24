@@ -180,7 +180,7 @@ export const RoyalDivider: React.FC<{ className?: string }> = ({ className = '' 
   return (
     <div className={`flex items-center justify-center space-x-3 my-4 ${className}`}>
       <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-[#FBE285]" />
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="shrink-0 animate-pulse">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="shrink-0">
         <path
           d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
           fill="url(#dividerStarGrad)"
